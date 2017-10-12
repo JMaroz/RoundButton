@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.marozzi.roundbutton.MainActivity">
+
+    <com.marozzi.roundbutton.RoundButton
+        android:id="@+id/bt"
+        style="@style/TextStyle194"
+        android:layout_width="88dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:gravity="center"
+        android:text="prenota"
+        app:rb_animation_alpha="false"
+        app:rb_animation_bar_color="@color/colorAccent"
+        app:rb_animation_bar_padding="8dp"
+        app:rb_animation_bar_width="2dp"
+        app:rb_animation_corner_radius="20dp"
+        app:rb_animation_duration="500"
+        app:rb_background_color="@android:color/transparent"
+
+        app:rb_success_resource="@drawable/ic_done_white_48dp"
+
+
+        app:rb_background_color_selected="@color/colorPrimary"
+        app:rb_corner_color="@color/colorPrimary"
+        app:rb_corner_color_selected="@color/colorPrimary"
+        app:rb_corner_radius="2dp"
+        app:rb_corner_width="1dp"
+        app:rb_text_color="@color/colorPrimary"
+        app:rb_text_color_selected="@android:color/white" />
+
+</LinearLayout>

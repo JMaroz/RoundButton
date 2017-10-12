@@ -1,0 +1,26 @@
+<resources>
+
+
+    <declare-styleable name="RoundButton">
+        <attr name="rb_animation_duration" format="integer" />
+        <attr name="rb_animation_bar_width" format="dimension" />
+        <attr name="rb_animation_bar_color" format="color" />
+        <attr name="rb_animation_bar_padding" format="dimension" />
+        <attr name="rb_animation_corner_radius" format="dimension" />
+        <attr name="rb_animation_alpha" format="boolean" />
+
+        <attr name="rb_success_color" format="color" />
+        <attr name="rb_success_resource" format="reference" />
+        <attr name="rb_failure_color" format="color" />
+        <attr name="rb_failure_resource" format="reference" />
+
+        <attr name="rb_corner_radius" format="dimension" />
+        <attr name="rb_corner_width" format="dimension" />
+        <attr name="rb_corner_color" format="color" />
+        <attr name="rb_corner_color_selected" format="color" />
+        <attr name="rb_background_color" format="color" />
+        <attr name="rb_background_color_selected" format="color" />
+        <attr name="rb_text_color" format="color" />
+        <attr name="rb_text_color_selected" format="color" />
+    </declare-styleable>
+</resources>
