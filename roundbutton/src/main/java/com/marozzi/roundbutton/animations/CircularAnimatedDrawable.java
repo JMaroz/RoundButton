@@ -1,4 +1,4 @@
-package com.marozzi.roundbutton;
+package com.marozzi.roundbutton.animations;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -13,16 +13,11 @@ import android.graphics.RectF;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-/**
- * Created by leandro on 5/31/16.
- */
 public class CircularAnimatedDrawable extends Drawable implements Animatable {
 
     private ValueAnimator mValueAnimatorAngle;

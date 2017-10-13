@@ -14,11 +14,15 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.StateSet;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.marozzi.roundbutton.animations.CircularAnimatedDrawable;
+import com.marozzi.roundbutton.animations.CircularRevealAnimatedDrawable;
 
 /**
  * Created by amarozzi on 21/09/2017.
@@ -30,7 +34,6 @@ public class RoundButton extends AppCompatButton {
         return new Builder();
     }
 
-    // start animations
     private enum AnimationState {
         IDLE, MORPHING, PROGRESS, DONE
     }
@@ -107,7 +110,7 @@ public class RoundButton extends AppCompatButton {
     /**
      * The width of the corner
      */
-    private int cornerWidth = 20;
+    private int cornerWidth;
 
     private int cornerColor;
     private int cornerColorSelected;
@@ -166,10 +169,10 @@ public class RoundButton extends AppCompatButton {
 
         a.recycle();
 
-        update();
+       update();
     }
 
-    public void update() {
+    private void update() {
         StateListDrawable background = new StateListDrawable();
         background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(backgroundColorSelected, cornerColorSelected, cornerWidth, cornerRadius));
         background.addState(StateSet.WILD_CARD, createDrawable(backgroundColor, cornerColor, cornerWidth, cornerRadius));
@@ -270,11 +273,6 @@ public class RoundButton extends AppCompatButton {
         showResultState();
     }
 
-    /**
-     * This method is called when the button and its dependencies are going to draw it selves.
-     *
-     * @param canvas Canvas
-     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -286,30 +284,16 @@ public class RoundButton extends AppCompatButton {
         }
     }
 
-    /**
-     * If the mAnimatedDrawable is null or its not running, it get created. Otherwise its draw method is
-     * called here.
-     *
-     * @param canvas Canvas
-     */
     private void drawIndeterminateProgress(Canvas canvas) {
         if (!progressDrawable.isRunning())
             progressDrawable.start();
         progressDrawable.draw(canvas);
     }
 
-    /**
-     * Method called on the onDraw when the button is on DONE status
-     *
-     * @param canvas Canvas
-     */
     private void drawDoneAnimation(Canvas canvas) {
         resultDrawable.draw(canvas);
     }
 
-    /**
-     * Method called to start the animation. Morphs in to a ball and then starts a loading spinner.
-     */
     public void startAnimation() {
         if (animationState != AnimationState.IDLE) {
             return;
@@ -385,7 +369,11 @@ public class RoundButton extends AppCompatButton {
             @Override
             public void onAnimationEnd(Animator animation) {
                 setText(property.getText());
-                setCompoundDrawablesRelative(property.getDrawables()[0], property.getDrawables()[1], property.getDrawables()[2], property.getDrawables()[3]);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    setCompoundDrawablesRelative(property.getDrawables()[0], property.getDrawables()[1], property.getDrawables()[2], property.getDrawables()[3]);
+                } else {
+                    setCompoundDrawables(property.getDrawables()[0], property.getDrawables()[1], property.getDrawables()[2], property.getDrawables()[3]);
+                }
                 setClickable(true);
                 animationState = AnimationState.IDLE;
                 if (listener != null) {
@@ -436,9 +424,6 @@ public class RoundButton extends AppCompatButton {
         }
     }
 
-    /**
-     * Stops the animation and sets the button in the STOPPED state.
-     */
     public void stopAnimation() {
         if (animationState == AnimationState.PROGRESS && progressDrawable != null && progressDrawable.isRunning()) {
             progressDrawable.stop();
@@ -526,12 +511,13 @@ public class RoundButton extends AppCompatButton {
         void onShowProgress();
 
         /**
-         *  When show the result state animations
+         * When show the result state animations
          */
         void onShowResultState();
     }
 
     public static final class Builder {
+
         private Integer animationDurations;
         private Integer animationCornerRadius;
         private Integer animationBarWidth;
@@ -677,7 +663,11 @@ public class RoundButton extends AppCompatButton {
             width = button.getWidth();
             height = button.getHeight();
             text = button.getText().toString();
-            drawables = button.getCompoundDrawablesRelative();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                drawables = button.getCompoundDrawablesRelative();
+            } else {
+                drawables = button.getCompoundDrawables();
+            }
         }
 
         public int getHeight() {

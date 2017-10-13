@@ -1,4 +1,5 @@
 # RoundButton
+
 Android Button with corner, morph and animations
 
 ## Contents
@@ -15,7 +16,7 @@ Android Button with corner, morph and animations
 
 ## How to use
 
-### Add to Layout
+### Add to layout
 
     <com.marozzi.roundbutton.RoundButton
             android:id="@+id/bt"
@@ -130,6 +131,7 @@ For bugs, feature requests, and discussion please use [GitHub Issues](https://gi
 ## Credits
 
 This library was inspired by this repos:
+
 - https://github.com/dmytrodanylyk/android-morphing-button
 - https://github.com/leandroBorgesFerreira/LoadingButtonAndroid
 

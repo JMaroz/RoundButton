@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.marozzi.roundbutton.MainActivity">
+    tools:context="com.marozzi.app.MainActivity">
 
     <com.marozzi.roundbutton.RoundButton
         android:id="@+id/bt"

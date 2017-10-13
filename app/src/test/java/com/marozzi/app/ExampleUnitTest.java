@@ -1,4 +1,4 @@
-package com.marozzi.roundbutton;
+package com.marozzi.app;
 
 import org.junit.Test;
 
