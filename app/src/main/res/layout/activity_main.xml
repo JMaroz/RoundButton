@@ -27,10 +27,7 @@
         app:rb_animation_corner_radius="20dp"
         app:rb_animation_duration="500"
         app:rb_background_color="@android:color/transparent"
-
         app:rb_success_resource="@drawable/ic_done_white_48dp"
-
-
         app:rb_background_color_selected="@color/colorPrimary"
         app:rb_corner_color="@color/colorPrimary"
         app:rb_corner_color_selected="@color/colorPrimary"
