@@ -2,7 +2,7 @@
 
 Android Button with corner, morph and animations
 
-<img src="https://imgur.com/a/qfk8H" width="380" />
+![gif](https://imgur.com/a/qfk8H)
 
 ## Contents
 
@@ -13,6 +13,8 @@ Android Button with corner, morph and animations
 - [Credits](#credits)
 
 ## Installation
+
+[ ![Download](https://api.bintray.com/packages/maro/maven/RoundButton/images/download.svg) ](https://bintray.com/maro/maven/RoundButton/_latestVersion)
 
     compile 'com.marozzi.roundbutton:round-button:1.0.0'
 
