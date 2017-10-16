@@ -2,6 +2,8 @@
 
 Android Button with corner, morph and animations
 
+//TODO gif
+
 ## Contents
 
 - [Installation](#installation)
@@ -12,7 +14,7 @@ Android Button with corner, morph and animations
 
 ## Installation
 
-    compile 'com.marozzi.roundbutton:round-bottom:[latest-version]'
+    compile 'com.marozzi.roundbutton:round-button:1.0.0'
 
 ## How to use
 
@@ -95,34 +97,47 @@ You can set a listener for every action
                 }
             });
 
+### Bonus: use the builder to customize the button at runtime
+
+       Random random = new Random();
+       RoundButton.Builder builder = RoundButton.newRoundButtonBuilder()
+               .withText("Bonus")
+               .withBackgroundColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
+               .withTextColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
+               .withCornerColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
+               .withCornerRadius(random.nextInt(20))
+               .withCornerWidth(random.nextInt(20));
+       bt.setCustomizations(builder);
+       bt.revertAnimation();
+
 ## Configure XML
 
 ###  Animations
 
-    - rb_animation_duration: duration of the animations in millisecond
-    - rb_animation_bar_width: the width of the progress bar
-    - rb_animation_bar_color: the color of the progress bar
-    - rb_animation_bar_padding: the padding from the outer border of the progress bar
-    - rb_animation_corner_radius: the radius of the botton corner
-    - rb_animation_alpha: true to perfom the morphing with alpha animation, false otherwise
+- rb_animation_duration: duration of the animations in millisecond
+- rb_animation_bar_width: the width of the progress bar
+- rb_animation_bar_color: the color of the progress bar
+- rb_animation_bar_padding: the padding from the outer border of the progress bar
+- rb_animation_corner_radius: the radius of the botton corner
+- rb_animation_alpha: true to perfom the morphing with alpha animation, false otherwise
 
 ### Results
 
-    - rb_success_color: background color for the success state
-    - rb_success_resource: image for the success state
-    - rb_failure_color: background color for the failure state
-    - rb_failure_resource: image for the failure state
+- rb_success_color: background color for the success state
+- rb_success_resource: image for the success state
+- rb_failure_color: background color for the failure state
+- rb_failure_resource: image for the failure state
 
 ### Button
 
-    - rb_corner_radius: radius of the button corner
-    - rb_corner_width: width of the button corner
-    - rb_corner_color: the color of the corner
-    - rb_corner_color_selected: the color when the button is pressed
-    - rb_background_color: the color of the background
-    - rb_background_color_selected: the color of the background when the button is pressed
-    - rb_text_color: the color of the text
-    - rb_text_color_selected: the color of the text when the button is pressed
+- rb_corner_radius: radius of the button corner
+- rb_corner_width: width of the button corner
+- rb_corner_color: the color of the corner
+- rb_corner_color_selected: the color when the button is pressed
+- rb_background_color: the color of the background
+- rb_background_color_selected: the color of the background when the button is pressed
+- rb_text_color: the color of the text
+- rb_text_color_selected: the color of the text when the button is pressed
 
 ## Bugs and Feedback
 
