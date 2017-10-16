@@ -2,7 +2,7 @@
 
 Android Button with corner, morph and animations
 
-![gif](https://imgur.com/a/qfk8H)
+![gif](https://imgur.com/a/qfk8H.gif)
 
 ## Contents
 
