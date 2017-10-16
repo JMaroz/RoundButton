@@ -2,7 +2,7 @@
 
 Android Button with corner, morph and animations
 
-//TODO gif
+<img src="https://imgur.com/a/qfk8H" width="380" />
 
 ## Contents
 
