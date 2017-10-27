@@ -27,17 +27,14 @@
         android:gravity="center"
         android:text="Button"
         app:rb_animation_alpha="false"
-        app:rb_animation_bar_color="@color/colorAccent"
+        app:rb_animation_bar_color="@color/colorPrimaryDark"
         app:rb_animation_bar_padding="8dp"
         app:rb_animation_bar_width="2dp"
         app:rb_animation_duration="500"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_selected="@color/colorPrimary"
+        app:rb_background_color="@android:color/white"
         app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_selected="@color/colorPrimary"
         app:rb_corner_width="1dp"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_selected="@android:color/white" />
+        app:rb_text_color="@color/colorPrimary" />
 
     <TextView
         android:layout_width="wrap_content"

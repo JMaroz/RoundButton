@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.support.annotation.FloatRange;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.StateSet;
@@ -143,17 +144,23 @@ public class RoundButton extends AppCompatButton {
         cornerRadius = a.getDimensionPixelSize(R.styleable.RoundButton_rb_corner_radius, 0);
         cornerWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_corner_width, 0);
 
-        cornerColor = cornerColorSelected = a.getColor(R.styleable.RoundButton_rb_corner_color, Color.TRANSPARENT);
+        cornerColor = a.getColor(R.styleable.RoundButton_rb_corner_color, Color.TRANSPARENT);
         if (a.hasValue(R.styleable.RoundButton_rb_corner_color_selected))
-            cornerColorSelected = a.getColor(R.styleable.RoundButton_rb_corner_color_selected, Color.TRANSPARENT);
+            cornerColorSelected = a.getColor(R.styleable.RoundButton_rb_corner_color_selected, cornerColor);
+        else
+            cornerColorSelected = manipulateColor(cornerColor, .8f);
 
-        backgroundColor = backgroundColorSelected = a.getColor(R.styleable.RoundButton_rb_background_color, Color.TRANSPARENT);
+        backgroundColor = a.getColor(R.styleable.RoundButton_rb_background_color, Color.TRANSPARENT);
         if (a.hasValue(R.styleable.RoundButton_rb_background_color_selected))
-            backgroundColorSelected = a.getColor(R.styleable.RoundButton_rb_background_color_selected, Color.TRANSPARENT);
+            backgroundColorSelected = a.getColor(R.styleable.RoundButton_rb_background_color_selected, backgroundColor);
+        else
+            backgroundColorSelected = manipulateColor(backgroundColor, .8f);
 
-        textColor = textColorSelected = a.getColor(R.styleable.RoundButton_rb_text_color, Color.TRANSPARENT);
+        textColor = a.getColor(R.styleable.RoundButton_rb_text_color, Color.TRANSPARENT);
         if (a.hasValue(R.styleable.RoundButton_rb_text_color_selected))
-            textColorSelected = a.getColor(R.styleable.RoundButton_rb_text_color_selected, Color.TRANSPARENT);
+            textColorSelected = a.getColor(R.styleable.RoundButton_rb_text_color_selected, textColor);
+        else
+            textColorSelected = manipulateColor(textColor, .8f);
 
         animationDurations = a.getInt(R.styleable.RoundButton_rb_animation_duration, 300);
         animationBarWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_bar_width, 20);
@@ -169,7 +176,15 @@ public class RoundButton extends AppCompatButton {
 
         a.recycle();
 
-       update();
+        update();
+    }
+
+    private int manipulateColor(int color, @FloatRange(from = 0, to = 2) float factor) {
+        int a = Color.alpha(color);
+        int r = Math.round(Color.red(color) * factor);
+        int g = Math.round(Color.green(color) * factor);
+        int b = Math.round(Color.blue(color) * factor);
+        return Color.argb(a, Math.min(r, 255), Math.min(g, 255), Math.min(b, 255));
     }
 
     private void update() {
