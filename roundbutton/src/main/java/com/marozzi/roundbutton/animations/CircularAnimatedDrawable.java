@@ -10,15 +10,13 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-public class CircularAnimatedDrawable extends Drawable implements Animatable {
+public class CircularAnimatedDrawable extends BaseAnimatedDrawable {
 
     private ValueAnimator mValueAnimatorAngle;
     private ValueAnimator mValueAnimatorSweep;
@@ -44,10 +42,9 @@ public class CircularAnimatedDrawable extends Drawable implements Animatable {
     private boolean shouldDraw;
 
     /**
-     *
-     * @param view View to be animated
+     * @param view        View to be animated
      * @param borderWidth The width of the spinning bar
-     * @param arcColor The color of the spinning bar
+     * @param arcColor    The color of the spinning bar
      */
     public CircularAnimatedDrawable(View view, float borderWidth, int arcColor) {
         mAnimatedView = view;
@@ -117,6 +114,7 @@ public class CircularAnimatedDrawable extends Drawable implements Animatable {
 
     /**
      * Method called when the drawable is going to draw itself.
+     *
      * @param canvas
      */
     @Override
@@ -149,10 +147,8 @@ public class CircularAnimatedDrawable extends Drawable implements Animatable {
         return PixelFormat.TRANSPARENT;
     }
 
-    /**
-     * Set up all the animations. There are two animation: Global angle animation and sweep animation.
-     */
-    private void setupAnimations() {
+    @Override
+    public void setupAnimations() {
         mValueAnimatorAngle = ValueAnimator.ofFloat(0, 360f);
         mValueAnimatorAngle.setInterpolator(ANGLE_INTERPOLATOR);
         mValueAnimatorAngle.setDuration(ANGLE_ANIMATOR_DURATION);
@@ -160,7 +156,7 @@ public class CircularAnimatedDrawable extends Drawable implements Animatable {
         mValueAnimatorAngle.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mCurrentGlobalAngle = (float)animation.getAnimatedValue();
+                mCurrentGlobalAngle = (float) animation.getAnimatedValue();
             }
         });
 
@@ -205,6 +201,7 @@ public class CircularAnimatedDrawable extends Drawable implements Animatable {
         }
     }
 
+    @Override
     public void dispose() {
         if (mValueAnimatorAngle != null) {
             mValueAnimatorAngle.end();

@@ -17,7 +17,7 @@ Android Button with corner, morph and animations
 
 [ ![Download](https://api.bintray.com/packages/maro/maven/RoundButton/images/download.svg) ](https://bintray.com/maro/maven/RoundButton/_latestVersion)
 
-    compile 'com.marozzi.roundbutton:round-button:1.0.1'
+    compile 'com.marozzi.roundbutton:round-button:1.0.2'
 
 ## How to use
 
@@ -28,28 +28,24 @@ Android Button with corner, morph and animations
             style="@style/TextStyle194"
             android:layout_width="88dp"
             android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
             android:gravity="center"
             android:text="prenota"
             app:rb_animation_alpha="false"
-            app:rb_animation_bar_color="@color/colorAccent"
-            app:rb_animation_bar_padding="8dp"
-            app:rb_animation_bar_width="2dp"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_animation_progress_style="circle"
             app:rb_animation_corner_radius="20dp"
             app:rb_animation_duration="500"
             app:rb_background_color="@android:color/transparent"
             app:rb_success_resource="@drawable/ic_done_white_48dp"
-            app:rb_background_color_selected="@color/colorPrimary"
+            app:rb_background_color_pressed="@color/colorPrimary"
             app:rb_corner_color="@color/colorPrimary"
-            app:rb_corner_color_selected="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
             app:rb_corner_radius="2dp"
             app:rb_corner_width="1dp"
             app:rb_text_color="@color/colorPrimary"
-            app:rb_text_color_selected="@android:color/white" />
+            app:rb_text_color_pressed="@android:color/white" />
 
 
 ### Start the animation
@@ -118,11 +114,14 @@ You can set a listener for every action
 ###  Animations
 
 - rb_animation_duration: duration of the animations in millisecond
-- rb_animation_bar_width: the width of the progress bar
-- rb_animation_bar_color: the color of the progress bar
-- rb_animation_bar_padding: the padding from the outer border of the progress bar
 - rb_animation_corner_radius: the radius of the botton corner
 - rb_animation_alpha: true to perfom the morphing with alpha animation, false otherwise
+- rb_animation_progress_width: the width of the progress bar
+- rb_animation_progress_color: the color of the progress bar
+- rb_animation_progress_padding: the padding from the outer border of the progress bar
+- rb_animation_progress_style: the style of the animation
+    - circle progress indicator
+    - dots progress indicator
 
 ### Results
 
@@ -136,11 +135,11 @@ You can set a listener for every action
 - rb_corner_radius: radius of the button corner
 - rb_corner_width: width of the button corner
 - rb_corner_color: the color of the corner
-- rb_corner_color_selected: the color when the button is pressed
+- rb_corner_color_pressed: the color when the button is pressed
 - rb_background_color: the color of the background
-- rb_background_color_selected: the color of the background when the button is pressed
+- rb_background_color_pressed: the color of the background when the button is pressed
 - rb_text_color: the color of the text
-- rb_text_color_selected: the color of the text when the button is pressed
+- rb_text_color_pressed: the color of the text when the button is pressed
 
 ## Bugs and Feedback
 

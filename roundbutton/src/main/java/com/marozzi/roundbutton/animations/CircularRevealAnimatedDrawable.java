@@ -15,7 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-public class CircularRevealAnimatedDrawable extends Drawable implements Animatable {
+public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
 
     private boolean mIsFilled;
     private Paint mPaint;
@@ -88,7 +88,8 @@ public class CircularRevealAnimatedDrawable extends Drawable implements Animatab
      * Setup all the animations. There are a reveal animation to show the button background
      * and a alpha animation to show the bitmap.
      */
-    private void setupAnimations(){
+    @Override
+    public void setupAnimations(){
         final ValueAnimator alphaAnimator = ValueAnimator.ofInt(0, 255);
         alphaAnimator.setDuration(100);
         alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -179,6 +180,7 @@ public class CircularRevealAnimatedDrawable extends Drawable implements Animatab
         return PixelFormat.OPAQUE;
     }
 
+    @Override
     public void dispose() {
         if (mRevealInAnimation != null) {
             mRevealInAnimation.end();

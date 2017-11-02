@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.bt)
-    void onClickBt(View view) {
+    @OnClick(R.id.bt_dot)
+    void onClickBtDot(View view) {
         final RoundButton bt = (RoundButton) view;
         bt.startAnimation();
         bt.postDelayed(new Runnable() {
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         }, 3000);
     }
 
-    @OnClick(R.id.bt_corner)
-    void onClickBtCorner(View view) {
+    @OnClick(R.id.bt)
+    void onClickBt(View view) {
         final RoundButton bt = (RoundButton) view;
         bt.startAnimation();
         bt.postDelayed(new Runnable() {

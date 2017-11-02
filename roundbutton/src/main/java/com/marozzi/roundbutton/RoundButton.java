@@ -22,8 +22,10 @@ import android.util.StateSet;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.marozzi.roundbutton.animations.BaseAnimatedDrawable;
 import com.marozzi.roundbutton.animations.CircularAnimatedDrawable;
 import com.marozzi.roundbutton.animations.CircularRevealAnimatedDrawable;
+import com.marozzi.roundbutton.animations.DotsAnimatedDrawable;
 
 /**
  * Created by amarozzi on 21/09/2017.
@@ -43,7 +45,11 @@ public class RoundButton extends AppCompatButton {
         NONE, SUCCESS, FAILURE,
     }
 
-    private CircularAnimatedDrawable progressDrawable;
+    public enum AnimationProgressStyle {
+        CIRCLE, DOTS
+    }
+
+    private BaseAnimatedDrawable progressDrawable;
     private CircularRevealAnimatedDrawable resultDrawable;
     private AnimatorSet morpSet;
 
@@ -52,6 +58,7 @@ public class RoundButton extends AppCompatButton {
 
     private ResultState resultState = ResultState.NONE;
     private AnimationState animationState = AnimationState.IDLE;
+    private AnimationProgressStyle animationProgressStyle = AnimationProgressStyle.CIRCLE;
 
     /**
      * Duration of the animations in milliseconds
@@ -66,17 +73,17 @@ public class RoundButton extends AppCompatButton {
     /**
      * The width of the bar during the animations
      */
-    private int animationBarWidth;
+    private int animationProgressWidth;
 
     /**
      * The color of the bar during the animations
      */
-    private int animationBarColor;
+    private int animationProgressColor;
 
     /**
      * The padding of the bar during the animations
      */
-    private int animationBarPadding;
+    private int animationProgressPadding;
 
     /**
      * Indicate if animate with alpha
@@ -114,13 +121,13 @@ public class RoundButton extends AppCompatButton {
     private int cornerWidth;
 
     private int cornerColor;
-    private int cornerColorSelected;
+    private int cornerColorPressed;
 
     private int backgroundColor;
-    private int backgroundColorSelected;
+    private int backgroundColorPressed;
 
     private int textColor;
-    private int textColorSelected;
+    private int textColorPressed;
 
     public RoundButton(Context context) {
         super(context);
@@ -145,29 +152,32 @@ public class RoundButton extends AppCompatButton {
         cornerWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_corner_width, 0);
 
         cornerColor = a.getColor(R.styleable.RoundButton_rb_corner_color, Color.TRANSPARENT);
-        if (a.hasValue(R.styleable.RoundButton_rb_corner_color_selected))
-            cornerColorSelected = a.getColor(R.styleable.RoundButton_rb_corner_color_selected, cornerColor);
+        if (a.hasValue(R.styleable.RoundButton_rb_corner_color_pressed))
+            cornerColorPressed = a.getColor(R.styleable.RoundButton_rb_corner_color_pressed, cornerColor);
         else
-            cornerColorSelected = manipulateColor(cornerColor, .8f);
+            cornerColorPressed = manipulateColor(cornerColor, .8f);
 
         backgroundColor = a.getColor(R.styleable.RoundButton_rb_background_color, Color.TRANSPARENT);
-        if (a.hasValue(R.styleable.RoundButton_rb_background_color_selected))
-            backgroundColorSelected = a.getColor(R.styleable.RoundButton_rb_background_color_selected, backgroundColor);
+        if (a.hasValue(R.styleable.RoundButton_rb_background_color_pressed))
+            backgroundColorPressed = a.getColor(R.styleable.RoundButton_rb_background_color_pressed, backgroundColor);
         else
-            backgroundColorSelected = manipulateColor(backgroundColor, .8f);
+            backgroundColorPressed = manipulateColor(backgroundColor, .8f);
 
         textColor = a.getColor(R.styleable.RoundButton_rb_text_color, Color.TRANSPARENT);
-        if (a.hasValue(R.styleable.RoundButton_rb_text_color_selected))
-            textColorSelected = a.getColor(R.styleable.RoundButton_rb_text_color_selected, textColor);
+        if (a.hasValue(R.styleable.RoundButton_rb_text_color_pressed))
+            textColorPressed = a.getColor(R.styleable.RoundButton_rb_text_color_pressed, textColor);
         else
-            textColorSelected = manipulateColor(textColor, .8f);
+            textColorPressed = manipulateColor(textColor, .8f);
 
         animationDurations = a.getInt(R.styleable.RoundButton_rb_animation_duration, 300);
-        animationBarWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_bar_width, 20);
-        animationBarColor = a.getColor(R.styleable.RoundButton_rb_animation_bar_color, backgroundColor);
-        animationBarPadding = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_bar_padding, 10);
         animationCornerRadius = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_corner_radius, 0);
         animationAlpha = a.getBoolean(R.styleable.RoundButton_rb_animation_alpha, false);
+        animationProgressWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_progress_width, 20);
+        animationProgressColor = a.getColor(R.styleable.RoundButton_rb_animation_progress_color, backgroundColor);
+        animationProgressPadding = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_progress_padding, 10);
+        if (a.hasValue(R.styleable.RoundButton_rb_animation_progress_style)) {
+            animationProgressStyle = AnimationProgressStyle.values()[a.getInt(R.styleable.RoundButton_rb_animation_progress_style, 0)];
+        }
 
         resultSuccessColor = a.getColor(R.styleable.RoundButton_rb_success_color, Color.GREEN);
         resultSuccessResource = a.getResourceId(R.styleable.RoundButton_rb_success_resource, 0);
@@ -189,7 +199,7 @@ public class RoundButton extends AppCompatButton {
 
     private void update() {
         StateListDrawable background = new StateListDrawable();
-        background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(backgroundColorSelected, cornerColorSelected, cornerWidth, cornerRadius));
+        background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(backgroundColorPressed, cornerColorPressed, cornerWidth, cornerRadius));
         background.addState(StateSet.WILD_CARD, createDrawable(backgroundColor, cornerColor, cornerWidth, cornerRadius));
         setBackground(background);
 
@@ -199,7 +209,7 @@ public class RoundButton extends AppCompatButton {
                         new int[]{}
                 },
                 new int[]{
-                        textColorSelected,
+                        textColorPressed,
                         textColor
                 }
         ));
@@ -228,19 +238,19 @@ public class RoundButton extends AppCompatButton {
             cornerColor = builder.cornerColor;
 
         if (builder.cornerColorSelected != null)
-            cornerColorSelected = builder.cornerColorSelected;
+            cornerColorPressed = builder.cornerColorSelected;
 
         if (builder.backgroundColor != null)
             backgroundColor = builder.backgroundColor;
 
         if (builder.backgroundColorSelected != null)
-            backgroundColorSelected = builder.backgroundColorSelected;
+            backgroundColorPressed = builder.backgroundColorSelected;
 
         if (builder.textColor != null)
             textColor = builder.textColor;
 
         if (builder.textColorSelected != null)
-            textColorSelected = builder.textColorSelected;
+            textColorPressed = builder.textColorSelected;
 
         if (builder.animationDurations != null)
             animationDurations = builder.animationDurations;
@@ -248,17 +258,20 @@ public class RoundButton extends AppCompatButton {
         if (builder.animationCornerRadius != null)
             animationCornerRadius = builder.animationCornerRadius;
 
-        if (builder.animationBarWidth != null)
-            animationBarWidth = builder.animationBarWidth;
+        if (builder.animationProgressWidth != null)
+            animationProgressWidth = builder.animationProgressWidth;
 
-        if (builder.animationBarColor != null)
-            animationBarColor = builder.animationBarColor;
+        if (builder.animationProgressColor != null)
+            animationProgressColor = builder.animationProgressColor;
 
-        if (builder.animationBarPadding != null)
-            animationBarPadding = builder.animationBarPadding;
+        if (builder.animationProgressPadding != null)
+            animationProgressPadding = builder.animationProgressPadding;
 
         if (builder.animationAlpha != null)
             animationAlpha = builder.animationAlpha;
+
+        if (builder.animationProgressStyle != null)
+            animationProgressStyle = builder.animationProgressStyle;
 
         if (builder.resultSuccessColor != null)
             resultSuccessColor = builder.resultSuccessColor;
@@ -333,14 +346,21 @@ public class RoundButton extends AppCompatButton {
                     listener.onApplyMorphingEnd();
                 }
 
-                progressDrawable = new CircularAnimatedDrawable(RoundButton.this, animationBarWidth, animationBarColor);
+                switch (animationProgressStyle) {
+                    case CIRCLE:
+                        progressDrawable = new CircularAnimatedDrawable(RoundButton.this, animationProgressWidth, animationProgressColor);
+                        break;
+                    case DOTS:
+                        progressDrawable = new DotsAnimatedDrawable(RoundButton.this, animationProgressColor);
+                        break;
+                }
 
                 int offset = (getWidth() - getHeight()) / 2;
 
-                int left = offset + animationBarPadding;
-                int right = getWidth() - offset - animationBarPadding;
-                int bottom = getHeight() - animationBarPadding;
-                int top = animationBarPadding;
+                int left = offset + animationProgressPadding;
+                int right = getWidth() - offset - animationProgressPadding;
+                int bottom = getHeight() - animationProgressPadding;
+                int top = animationProgressPadding;
 
                 progressDrawable.setBounds(left, top, right, bottom);
                 progressDrawable.setCallback(RoundButton.this);
@@ -406,8 +426,7 @@ public class RoundButton extends AppCompatButton {
         stopAnimation();
 
         if (resultDrawable != null) {
-            if (resultDrawable.isRunning())
-                resultDrawable.stop();
+            resultDrawable.stop();
             resultDrawable.dispose();
         }
 
@@ -535,10 +554,11 @@ public class RoundButton extends AppCompatButton {
 
         private Integer animationDurations;
         private Integer animationCornerRadius;
-        private Integer animationBarWidth;
-        private Integer animationBarColor;
-        private Integer animationBarPadding;
         private Boolean animationAlpha;
+        private Integer animationProgressWidth;
+        private Integer animationProgressColor;
+        private Integer animationProgressPadding;
+        private AnimationProgressStyle animationProgressStyle;
         private Integer resultSuccessColor;
         private Integer resultSuccessResource;
         private Integer resultFailureColor;
@@ -566,23 +586,28 @@ public class RoundButton extends AppCompatButton {
             return this;
         }
 
-        public Builder withAnimationBarWidth(int animationBarWidth) {
-            this.animationBarWidth = animationBarWidth;
-            return this;
-        }
-
-        public Builder withAnimationBarColor(int animationBarColor) {
-            this.animationBarColor = animationBarColor;
-            return this;
-        }
-
-        public Builder withAnimationBarPadding(int animationBarPadding) {
-            this.animationBarPadding = animationBarPadding;
-            return this;
-        }
-
         public Builder withAnimationAlpha(boolean animationAlpha) {
             this.animationAlpha = animationAlpha;
+            return this;
+        }
+
+        public Builder withAnimationProgressWidth(int animationBarWidth) {
+            this.animationProgressWidth = animationBarWidth;
+            return this;
+        }
+
+        public Builder withAnimationProgressColor(int animationBarColor) {
+            this.animationProgressColor = animationBarColor;
+            return this;
+        }
+
+        public Builder withAnimationProgressPadding(int animationBarPadding) {
+            this.animationProgressPadding = animationBarPadding;
+            return this;
+        }
+
+        public Builder withAnimationProgressStyle(AnimationProgressStyle animationProgressStyle) {
+            this.animationProgressStyle = animationProgressStyle;
             return this;
         }
 
