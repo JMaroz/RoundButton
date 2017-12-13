@@ -1,16 +1,15 @@
 package com.marozzi.app;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import com.marozzi.roundbutton.RoundButton;
+import com.marozzi.roundbutton.RoundButtonHelper;
 
 import java.util.Random;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -62,13 +61,17 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_alpha)
     void onClickBtAlpha(View view) {
         final RoundButton bt = (RoundButton) view;
-        bt.startAnimation();
-        bt.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                bt.revertAnimation();
-            }
-        }, 3000);
+        if (bt.isAnimating()) {
+            bt.setResultState(RoundButton.ResultState.FAILURE);
+        } else {
+            bt.startAnimation();
+            bt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    bt.revertAnimation();
+                }
+            }, 3000);
+        }
     }
 
     @OnClick(R.id.bt_success)
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Random random = new Random();
-                RoundButton.Builder builder = RoundButton.newRoundButtonBuilder()
+                RoundButtonHelper.Builder builder = RoundButtonHelper.newBuilder()
                         .withText("Bonus")
                         .withBackgroundColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
                         .withTextColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))

@@ -1,6 +1,4 @@
 <resources>
-
-
     <declare-styleable name="RoundButton">
         <attr name="rb_animation_duration" format="integer" />
         <attr name="rb_animation_corner_radius" format="dimension" />
@@ -12,6 +10,8 @@
             <enum name="circle" value="0" />
             <enum name="dots" value="1" />
         </attr>
+        <attr name="rb_animation_inner_resource" format="reference" />
+        <attr name="rb_animation_inner_resource_color" format="color" />
 
         <attr name="rb_success_color" format="color" />
         <attr name="rb_success_resource" format="reference" />

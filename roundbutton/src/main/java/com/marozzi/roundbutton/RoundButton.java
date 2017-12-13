@@ -33,10 +33,6 @@ import com.marozzi.roundbutton.animations.DotsAnimatedDrawable;
 
 public class RoundButton extends AppCompatButton {
 
-    public static Builder newRoundButtonBuilder() {
-        return new Builder();
-    }
-
     private enum AnimationState {
         IDLE, MORPHING, PROGRESS, DONE
     }
@@ -89,6 +85,9 @@ public class RoundButton extends AppCompatButton {
      * Indicate if animate with alpha
      */
     private boolean animationAlpha;
+
+    private int animationInnerResource;
+    private int animationInnerResourceColor;
 
     /**
      * Background color for success result
@@ -178,6 +177,10 @@ public class RoundButton extends AppCompatButton {
         if (a.hasValue(R.styleable.RoundButton_rb_animation_progress_style)) {
             animationProgressStyle = AnimationProgressStyle.values()[a.getInt(R.styleable.RoundButton_rb_animation_progress_style, 0)];
         }
+        animationInnerResource = a.getResourceId(R.styleable.RoundButton_rb_animation_inner_resource, 0);
+        if (a.hasValue(R.styleable.RoundButton_rb_animation_inner_resource_color)) {
+            animationInnerResourceColor = a.getColor(R.styleable.RoundButton_rb_animation_inner_resource_color, Color.BLACK);
+        }
 
         resultSuccessColor = a.getColor(R.styleable.RoundButton_rb_success_color, Color.GREEN);
         resultSuccessResource = a.getResourceId(R.styleable.RoundButton_rb_success_resource, 0);
@@ -227,7 +230,7 @@ public class RoundButton extends AppCompatButton {
         this.listener = listener;
     }
 
-    public void setCustomizations(Builder builder) {
+    public void setCustomizations(RoundButtonHelper.Builder builder) {
         if (builder.cornerRadius != null)
             cornerRadius = builder.cornerRadius;
 
@@ -286,7 +289,7 @@ public class RoundButton extends AppCompatButton {
             resultFailureResource = builder.resultFailureResource;
 
         if (builder.text != null) {
-            if (animationState == AnimationState.PROGRESS) {
+            if (animationState == AnimationState.PROGRESS || animationState == AnimationState.MORPHING) {
                 property.setText(builder.text);
             } else {
                 setText(builder.text);
@@ -348,7 +351,9 @@ public class RoundButton extends AppCompatButton {
 
                 switch (animationProgressStyle) {
                     case CIRCLE:
-                        progressDrawable = new CircularAnimatedDrawable(RoundButton.this, animationProgressWidth, animationProgressColor);
+                        progressDrawable = new CircularAnimatedDrawable(RoundButton.this, animationProgressWidth, animationProgressColor, animationInnerResource, animationInnerResourceColor);
+                        if (animationInnerResource != 0)
+                            setClickable(true);
                         break;
                     case DOTS:
                         progressDrawable = new DotsAnimatedDrawable(RoundButton.this, animationProgressColor);
@@ -528,6 +533,10 @@ public class RoundButton extends AppCompatButton {
         }
     }
 
+    public boolean isAnimating() {
+        return animationState != AnimationState.IDLE;
+    }
+
     public interface RoundButtonAnimationListener {
         /**
          * When the revert morphing animations end
@@ -548,133 +557,6 @@ public class RoundButton extends AppCompatButton {
          * When show the result state animations
          */
         void onShowResultState();
-    }
-
-    public static final class Builder {
-
-        private Integer animationDurations;
-        private Integer animationCornerRadius;
-        private Boolean animationAlpha;
-        private Integer animationProgressWidth;
-        private Integer animationProgressColor;
-        private Integer animationProgressPadding;
-        private AnimationProgressStyle animationProgressStyle;
-        private Integer resultSuccessColor;
-        private Integer resultSuccessResource;
-        private Integer resultFailureColor;
-        private Integer resultFailureResource;
-        private Integer cornerRadius;
-        private Integer cornerWidth;
-        private Integer cornerColor;
-        private Integer cornerColorSelected;
-        private Integer backgroundColor;
-        private Integer backgroundColorSelected;
-        private Integer textColor;
-        private Integer textColorSelected;
-        private String text;
-
-        private Builder() {
-        }
-
-        public Builder withAnimationDurations(int animationDurations) {
-            this.animationDurations = animationDurations;
-            return this;
-        }
-
-        public Builder withAnimationCornerRadius(int animationCornerRadius) {
-            this.animationCornerRadius = animationCornerRadius;
-            return this;
-        }
-
-        public Builder withAnimationAlpha(boolean animationAlpha) {
-            this.animationAlpha = animationAlpha;
-            return this;
-        }
-
-        public Builder withAnimationProgressWidth(int animationBarWidth) {
-            this.animationProgressWidth = animationBarWidth;
-            return this;
-        }
-
-        public Builder withAnimationProgressColor(int animationBarColor) {
-            this.animationProgressColor = animationBarColor;
-            return this;
-        }
-
-        public Builder withAnimationProgressPadding(int animationBarPadding) {
-            this.animationProgressPadding = animationBarPadding;
-            return this;
-        }
-
-        public Builder withAnimationProgressStyle(AnimationProgressStyle animationProgressStyle) {
-            this.animationProgressStyle = animationProgressStyle;
-            return this;
-        }
-
-        public Builder withResultSuccessColor(int resultSuccessColor) {
-            this.resultSuccessColor = resultSuccessColor;
-            return this;
-        }
-
-        public Builder withResultSuccessResource(int resultSuccessResource) {
-            this.resultSuccessResource = resultSuccessResource;
-            return this;
-        }
-
-        public Builder withResultFailureColor(int resultFailureColor) {
-            this.resultFailureColor = resultFailureColor;
-            return this;
-        }
-
-        public Builder withResultFailureResource(int resultFailureResource) {
-            this.resultFailureResource = resultFailureResource;
-            return this;
-        }
-
-        public Builder withCornerRadius(int cornerRadius) {
-            this.cornerRadius = cornerRadius;
-            return this;
-        }
-
-        public Builder withCornerWidth(int cornerWidth) {
-            this.cornerWidth = cornerWidth;
-            return this;
-        }
-
-        public Builder withCornerColor(int cornerColor) {
-            this.cornerColor = cornerColor;
-            return this;
-        }
-
-        public Builder withCornerColorSelected(int cornerColorSelected) {
-            this.cornerColorSelected = cornerColorSelected;
-            return this;
-        }
-
-        public Builder withBackgroundColor(int backgroundColor) {
-            this.backgroundColor = backgroundColor;
-            return this;
-        }
-
-        public Builder withBackgroundColorSelected(int backgroundColorSelected) {
-            this.backgroundColorSelected = backgroundColorSelected;
-            return this;
-        }
-
-        public Builder withTextColor(int textColor) {
-            this.textColor = textColor;
-            return this;
-        }
-
-        public Builder withTextColorSelected(int textColorSelected) {
-            this.textColorSelected = textColorSelected;
-            return this;
-        }
-
-        public Builder withText(String text) {
-            this.text = text;
-            return this;
-        }
     }
 
     private class ButtonProperty {

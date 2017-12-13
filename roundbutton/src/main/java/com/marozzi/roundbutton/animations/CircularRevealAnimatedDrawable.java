@@ -10,8 +10,6 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -33,10 +31,9 @@ public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
     private float bitMapYOffset;
 
     /**
-     *
-     * @param view The view that if being animated
+     * @param view      The view that if being animated
      * @param fillColor The color of the background that will the revealed
-     * @param bitmap The animage that will be shown in the end of the animation.
+     * @param bitmap    The animage that will be shown in the end of the animation.
      */
     public CircularRevealAnimatedDrawable(View view, int fillColor, Bitmap bitmap) {
         mAnimatedView = view;
@@ -74,14 +71,14 @@ public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
         int bitMapWidth = (int) ((bounds.right - bounds.left) * 0.6);
         int bitMapHeight = (int) ((bounds.bottom - bounds.top) * 0.6);
 
-        bitMapXOffset =(float) (((bounds.right - bounds.left) - bitMapWidth)/2);
-        bitMapYOffset =(float) (((bounds.bottom - bounds.top) - bitMapHeight)/2);
+        bitMapXOffset = (float) (((bounds.right - bounds.left) - bitMapWidth) / 2);
+        bitMapYOffset = (float) (((bounds.bottom - bounds.top) - bitMapHeight) / 2);
 
         mReadyImage = Bitmap.createScaledBitmap(mReadyImage, bitMapWidth, bitMapHeight, false);
 
-        mFinalRadius = (bounds.right - bounds.left)/2;
-        mCenterWidth = (bounds.right + bounds.left)/2;
-        mCenterHeith = (bounds.bottom + bounds.top)/2;
+        mFinalRadius = (bounds.right - bounds.left) / 2;
+        mCenterWidth = (bounds.right + bounds.left) / 2;
+        mCenterHeith = (bounds.bottom + bounds.top) / 2;
     }
 
     /**
@@ -89,7 +86,7 @@ public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
      * and a alpha animation to show the bitmap.
      */
     @Override
-    public void setupAnimations(){
+    public void setupAnimations() {
         final ValueAnimator alphaAnimator = ValueAnimator.ofInt(0, 255);
         alphaAnimator.setDuration(100);
         alphaAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -151,7 +148,6 @@ public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
     }
 
     /**
-     *
      * @return Return if its running or not.
      */
     @Override
@@ -163,17 +159,19 @@ public class CircularRevealAnimatedDrawable extends BaseAnimatedDrawable {
     public void draw(Canvas canvas) {
         canvas.drawCircle(mCenterWidth, mCenterHeith, mRadius, mPaint);
 
-        if(mIsFilled) {
+        if (mIsFilled) {
             mPaintImageReady.setAlpha(mImageReadyAlpha);
             canvas.drawBitmap(mReadyImage, bitMapXOffset, bitMapYOffset, mPaintImageReady);
         }
     }
 
     @Override
-    public void setAlpha(int alpha) {}
+    public void setAlpha(int alpha) {
+    }
 
     @Override
-    public void setColorFilter(ColorFilter colorFilter) {}
+    public void setColorFilter(ColorFilter colorFilter) {
+    }
 
     @Override
     public int getOpacity() {
