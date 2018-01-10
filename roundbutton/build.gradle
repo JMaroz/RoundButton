@@ -2,19 +2,19 @@ apply plugin: 'com.android.library'
 
 ext {
     PUBLISH_GROUP_ID = 'com.marozzi.roundbutton'
-    PUBLISH_VERSION = '1.0.2'
+    PUBLISH_VERSION = '1.0.3'
     PUBLISH_ARTIFACT_ID = 'round-button'
 }
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 3
-        versionName "1.0.2"
+        versionName "1.0.3"
 
     }
     buildTypes {

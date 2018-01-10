@@ -22,9 +22,12 @@
         <attr name="rb_corner_width" format="dimension" />
         <attr name="rb_corner_color" format="color" />
         <attr name="rb_corner_color_pressed" format="color" />
+        <attr name="rb_corner_color_disabled" format="color" />
         <attr name="rb_background_color" format="color" />
         <attr name="rb_background_color_pressed" format="color" />
+        <attr name="rb_background_color_disabled" format="color" />
         <attr name="rb_text_color" format="color" />
         <attr name="rb_text_color_pressed" format="color" />
+        <attr name="rb_text_color_disabled" format="color" />
     </declare-styleable>
 </resources>
