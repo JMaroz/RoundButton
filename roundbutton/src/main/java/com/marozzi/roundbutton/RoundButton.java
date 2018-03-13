@@ -121,20 +121,19 @@ public class RoundButton extends AppCompatButton {
 
     private int cornerColor;
     private int cornerColorPressed;
-    private int cornerColorDisabled;
+    private int cornerColorDisabled = Color.TRANSPARENT;
 
     private int backgroundColor;
     private int backgroundColorPressed;
-    private int backgroundColorDisabled;
+    private int backgroundColorDisabled = Color.TRANSPARENT;
 
     private int textColor;
     private int textColorPressed;
-    private int textColorDisabled;
+    private int textColorDisabled = Color.TRANSPARENT;
 
     public RoundButton(Context context) {
         super(context);
         init(context, null, 0);
-
     }
 
     public RoundButton(Context context, AttributeSet attrs) {
@@ -154,34 +153,34 @@ public class RoundButton extends AppCompatButton {
         cornerWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_corner_width, 0);
 
         cornerColor = a.getColor(R.styleable.RoundButton_rb_corner_color, Color.TRANSPARENT);
+
+        if (a.hasValue(R.styleable.RoundButton_rb_corner_color_disabled))
+            cornerColorDisabled = a.getColor(R.styleable.RoundButton_rb_corner_color_disabled, Color.TRANSPARENT);
+
         if (a.hasValue(R.styleable.RoundButton_rb_corner_color_pressed))
             cornerColorPressed = a.getColor(R.styleable.RoundButton_rb_corner_color_pressed, cornerColor);
         else
             cornerColorPressed = manipulateColor(cornerColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_corner_color_disabled))
-            cornerColorDisabled = a.getColor(R.styleable.RoundButton_rb_corner_color_disabled, cornerColor);
-        else
-            cornerColorDisabled = manipulateColor(cornerColor, 1.2f);
 
         backgroundColor = a.getColor(R.styleable.RoundButton_rb_background_color, Color.TRANSPARENT);
+
+        if (a.hasValue(R.styleable.RoundButton_rb_background_color_disabled))
+            backgroundColorDisabled = a.getColor(R.styleable.RoundButton_rb_background_color_disabled, Color.TRANSPARENT);
+
         if (a.hasValue(R.styleable.RoundButton_rb_background_color_pressed))
             backgroundColorPressed = a.getColor(R.styleable.RoundButton_rb_background_color_pressed, backgroundColor);
         else
             backgroundColorPressed = manipulateColor(backgroundColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_background_color_disabled))
-            backgroundColorDisabled = a.getColor(R.styleable.RoundButton_rb_background_color_disabled, backgroundColor);
-        else
-            backgroundColorDisabled = manipulateColor(backgroundColor, 1.2f);
 
         textColor = a.getColor(R.styleable.RoundButton_rb_text_color, Color.TRANSPARENT);
+
+        if (a.hasValue(R.styleable.RoundButton_rb_text_color_disabled))
+            textColorDisabled = a.getColor(R.styleable.RoundButton_rb_text_color_disabled, Color.TRANSPARENT);
+
         if (a.hasValue(R.styleable.RoundButton_rb_text_color_pressed))
             textColorPressed = a.getColor(R.styleable.RoundButton_rb_text_color_pressed, textColor);
         else
             textColorPressed = manipulateColor(textColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_text_color_disabled))
-            textColorDisabled = a.getColor(R.styleable.RoundButton_rb_text_color_disabled, textColor);
-        else
-            textColorDisabled = manipulateColor(textColor, 1.2f);
 
         animationDurations = a.getInt(R.styleable.RoundButton_rb_animation_duration, 300);
         animationCornerRadius = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_corner_radius, 0);
@@ -218,22 +217,31 @@ public class RoundButton extends AppCompatButton {
     private void update() {
         StateListDrawable background = new StateListDrawable();
         background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(backgroundColorPressed, cornerColorPressed, cornerWidth, cornerRadius));
-        background.addState(new int[]{-android.R.attr.state_enabled}, createDrawable(backgroundColorDisabled, cornerColorDisabled, cornerWidth, cornerRadius));
+        if (backgroundColorDisabled != Color.TRANSPARENT && cornerColorDisabled != Color.TRANSPARENT)
+            background.addState(new int[]{-android.R.attr.state_enabled}, createDrawable(backgroundColorDisabled, cornerColorDisabled, cornerWidth, cornerRadius));
         background.addState(StateSet.WILD_CARD, createDrawable(backgroundColor, cornerColor, cornerWidth, cornerRadius));
         setBackground(background);
 
-        setTextColor(new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_pressed},
-                        new int[]{-android.R.attr.state_enabled},
-                        new int[]{}
-                },
-                new int[]{
-                        textColorPressed,
-                        textColorDisabled,
-                        textColor
-                }
-        ));
+        ColorStateList list;
+        if (textColorDisabled != Color.TRANSPARENT)
+            list = new ColorStateList(new int[][]{
+                    new int[]{android.R.attr.state_pressed},
+                    new int[]{-android.R.attr.state_enabled},
+                    new int[]{}
+            }, new int[]{
+                    textColorPressed,
+                    textColorDisabled,
+                    textColor
+            });
+        else
+            list = new ColorStateList(new int[][]{
+                    new int[]{android.R.attr.state_pressed},
+                    new int[]{}
+            }, new int[]{
+                    textColorPressed,
+                    textColor
+            });
+        setTextColor(list);
     }
 
     private GradientDrawable createDrawable(int color, int cornerColor, int cornerSize, int cornerRadius) {
@@ -261,17 +269,32 @@ public class RoundButton extends AppCompatButton {
         if (builder.cornerColorSelected != null)
             cornerColorPressed = builder.cornerColorSelected;
 
+        if (builder.cornerColorDisabled != null)
+            cornerColorDisabled = builder.cornerColorDisabled;
+
         if (builder.backgroundColor != null)
             backgroundColor = builder.backgroundColor;
 
         if (builder.backgroundColorSelected != null)
             backgroundColorPressed = builder.backgroundColorSelected;
 
+        if (builder.backgroundColorDisabled != null)
+            backgroundColorDisabled = builder.backgroundColorDisabled;
+
         if (builder.textColor != null)
             textColor = builder.textColor;
 
         if (builder.textColorSelected != null)
             textColorPressed = builder.textColorSelected;
+
+        if (builder.textColorDisabled != null)
+            textColorDisabled = builder.textColorDisabled;
+
+        if (builder.textColorDisabled != null)
+            textColorDisabled = builder.textColorDisabled;
+
+        if (builder.animationInnerResource != null)
+            animationInnerResource = builder.animationInnerResource;
 
         if (builder.animationDurations != null)
             animationDurations = builder.animationDurations;
