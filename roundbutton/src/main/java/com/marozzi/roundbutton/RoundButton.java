@@ -15,7 +15,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.FloatRange;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.StateSet;
@@ -27,11 +26,18 @@ import com.marozzi.roundbutton.animations.CircularAnimatedDrawable;
 import com.marozzi.roundbutton.animations.CircularRevealAnimatedDrawable;
 import com.marozzi.roundbutton.animations.DotsAnimatedDrawable;
 
+import static com.marozzi.roundbutton.RoundButtonHelper.createDrawable;
+import static com.marozzi.roundbutton.RoundButtonHelper.manipulateColor;
+
 /**
  * Created by amarozzi on 21/09/2017.
  */
 
 public class RoundButton extends AppCompatButton {
+
+    public static RoundButtonHelper.Builder newBuilder() {
+        return new RoundButtonHelper.Builder();
+    }
 
     private enum AnimationState {
         IDLE, MORPHING, PROGRESS, DONE
@@ -86,7 +92,14 @@ public class RoundButton extends AppCompatButton {
      */
     private boolean animationAlpha;
 
+    /**
+     * Resource for show an image while animating, only work with circle animation
+     */
     private int animationInnerResource;
+
+    /**
+     * Tint color for the resource to show while animating
+     */
     private int animationInnerResourceColor;
 
     /**
@@ -121,15 +134,15 @@ public class RoundButton extends AppCompatButton {
 
     private int cornerColor;
     private int cornerColorPressed;
-    private int cornerColorDisabled;
+    private int cornerColorDisabled = -1;
 
     private int backgroundColor;
     private int backgroundColorPressed;
-    private int backgroundColorDisabled;
+    private int backgroundColorDisabled = -1;
 
     private int textColor;
     private int textColorPressed;
-    private int textColorDisabled;
+    private int textColorDisabled = -1;
 
     public RoundButton(Context context) {
         super(context);
@@ -154,34 +167,25 @@ public class RoundButton extends AppCompatButton {
         cornerWidth = a.getDimensionPixelSize(R.styleable.RoundButton_rb_corner_width, 0);
 
         cornerColor = a.getColor(R.styleable.RoundButton_rb_corner_color, Color.TRANSPARENT);
+        cornerColorDisabled = a.getColor(R.styleable.RoundButton_rb_corner_color_disabled, cornerColorDisabled);
         if (a.hasValue(R.styleable.RoundButton_rb_corner_color_pressed))
             cornerColorPressed = a.getColor(R.styleable.RoundButton_rb_corner_color_pressed, cornerColor);
         else
             cornerColorPressed = manipulateColor(cornerColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_corner_color_disabled))
-            cornerColorDisabled = a.getColor(R.styleable.RoundButton_rb_corner_color_disabled, cornerColor);
-        else
-            cornerColorDisabled = manipulateColor(cornerColor, 1.2f);
 
         backgroundColor = a.getColor(R.styleable.RoundButton_rb_background_color, Color.TRANSPARENT);
+        backgroundColorDisabled = a.getColor(R.styleable.RoundButton_rb_background_color_disabled, backgroundColorDisabled);
         if (a.hasValue(R.styleable.RoundButton_rb_background_color_pressed))
             backgroundColorPressed = a.getColor(R.styleable.RoundButton_rb_background_color_pressed, backgroundColor);
         else
             backgroundColorPressed = manipulateColor(backgroundColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_background_color_disabled))
-            backgroundColorDisabled = a.getColor(R.styleable.RoundButton_rb_background_color_disabled, backgroundColor);
-        else
-            backgroundColorDisabled = manipulateColor(backgroundColor, 1.2f);
 
         textColor = a.getColor(R.styleable.RoundButton_rb_text_color, Color.TRANSPARENT);
+        textColorDisabled = a.getColor(R.styleable.RoundButton_rb_text_color_disabled, textColorDisabled);
         if (a.hasValue(R.styleable.RoundButton_rb_text_color_pressed))
             textColorPressed = a.getColor(R.styleable.RoundButton_rb_text_color_pressed, textColor);
         else
             textColorPressed = manipulateColor(textColor, .8f);
-        if (a.hasValue(R.styleable.RoundButton_rb_text_color_disabled))
-            textColorDisabled = a.getColor(R.styleable.RoundButton_rb_text_color_disabled, textColor);
-        else
-            textColorDisabled = manipulateColor(textColor, 1.2f);
 
         animationDurations = a.getInt(R.styleable.RoundButton_rb_animation_duration, 300);
         animationCornerRadius = a.getDimensionPixelSize(R.styleable.RoundButton_rb_animation_corner_radius, 0);
@@ -207,42 +211,43 @@ public class RoundButton extends AppCompatButton {
         update();
     }
 
-    private int manipulateColor(int color, @FloatRange(from = 0, to = 2) float factor) {
-        int a = Color.alpha(color);
-        int r = Math.round(Color.red(color) * factor);
-        int g = Math.round(Color.green(color) * factor);
-        int b = Math.round(Color.blue(color) * factor);
-        return Color.argb(a, Math.min(r, 255), Math.min(g, 255), Math.min(b, 255));
-    }
-
     private void update() {
         StateListDrawable background = new StateListDrawable();
-        background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(backgroundColorPressed, cornerColorPressed, cornerWidth, cornerRadius));
-        background.addState(new int[]{-android.R.attr.state_enabled}, createDrawable(backgroundColorDisabled, cornerColorDisabled, cornerWidth, cornerRadius));
-        background.addState(StateSet.WILD_CARD, createDrawable(backgroundColor, cornerColor, cornerWidth, cornerRadius));
+        background.addState(new int[]{android.R.attr.state_pressed}, createDrawable(
+                backgroundColorPressed, cornerColorPressed, cornerWidth, cornerRadius));
+
+        if (backgroundColorDisabled != -1)
+            background.addState(new int[]{-android.R.attr.state_enabled}, createDrawable(
+                    backgroundColorDisabled, cornerColorDisabled, cornerWidth, cornerRadius));
+
+        background.addState(StateSet.WILD_CARD, createDrawable(
+                backgroundColor, cornerColor, cornerWidth, cornerRadius));
         setBackground(background);
 
-        setTextColor(new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_pressed},
-                        new int[]{-android.R.attr.state_enabled},
-                        new int[]{}
-                },
-                new int[]{
-                        textColorPressed,
-                        textColorDisabled,
-                        textColor
-                }
-        ));
+        setTextColor(textColorDisabled != -1 ?
+                new ColorStateList(
+                        new int[][]{
+                                new int[]{android.R.attr.state_pressed},
+                                new int[]{-android.R.attr.state_enabled},
+                                new int[]{}
+                        },
+                        new int[]{
+                                textColorPressed,
+                                textColorDisabled,
+                                textColor
+                        }) :
+                new ColorStateList(
+                        new int[][]{
+                                new int[]{android.R.attr.state_pressed},
+                                new int[]{}
+                        },
+                        new int[]{
+                                textColorPressed,
+                                textColor
+                        }
+                ));
     }
 
-    private GradientDrawable createDrawable(int color, int cornerColor, int cornerSize, int cornerRadius) {
-        GradientDrawable out = new GradientDrawable();
-        out.setColor(color);
-        out.setStroke(cornerSize, cornerColor);
-        out.setCornerRadius(cornerRadius);
-        return out;
-    }
 
     public void setButtonAnimationListener(RoundButtonAnimationListener listener) {
         this.listener = listener;
