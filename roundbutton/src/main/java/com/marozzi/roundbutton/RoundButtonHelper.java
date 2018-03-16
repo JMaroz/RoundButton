@@ -48,7 +48,6 @@ public class RoundButtonHelper {
         return out;
     }
 
-    public static final class Builder {
     public static final class Builder implements Parcelable {
 
         Integer animationDurations;
@@ -75,6 +74,8 @@ public class RoundButtonHelper {
         Integer textColorSelected;
         Integer textColorDisabled;
         String text;
+        Integer width;
+        Integer height;
 
         Builder() {
         }
@@ -105,6 +106,8 @@ public class RoundButtonHelper {
             this.textColorSelected = (Integer) in.readValue(Integer.class.getClassLoader());
             this.textColorDisabled = (Integer) in.readValue(Integer.class.getClassLoader());
             this.text = in.readString();
+            this.width = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.height = (Integer) in.readValue(Integer.class.getClassLoader());
         }
 
         public Builder withAnimationInnerResource(@DrawableRes int animationInnerResource) {
@@ -227,6 +230,16 @@ public class RoundButtonHelper {
             return this;
         }
 
+        public Builder withWidth(Integer width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder withHeight(Integer height) {
+            this.height = height;
+            return this;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -258,6 +271,8 @@ public class RoundButtonHelper {
             dest.writeValue(this.textColorSelected);
             dest.writeValue(this.textColorDisabled);
             dest.writeString(this.text);
+            dest.writeValue(this.width);
+            dest.writeValue(this.height);
         }
 
         public static final Parcelable.Creator<Builder> CREATOR = new Parcelable.Creator<Builder>() {

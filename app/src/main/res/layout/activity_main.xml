@@ -1,209 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context="com.marozzi.app.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Standard" />
-
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="false"
-        app:rb_animation_corner_radius="6dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_padding="8dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_radius="6dp"
-        app:rb_corner_width="1dp"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        android:orientation="vertical"
+        tools:context="com.marozzi.app.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="With dot animation" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Messanger" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_dot"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="true"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_style="dots"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_radius="6dp"
-        app:rb_corner_width="1dp"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_messanger"
+            style="@style/TextStyle194"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="Send Message"
+            app:rb_animation_alpha="true"
+            app:rb_animation_duration="500"
+            app:rb_animation_inner_resource="@drawable/ic_action_cose"
+            app:rb_animation_inner_resource_color="@color/black"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="4dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="3dp"
+            app:rb_corner_width="1dp"
+            app:rb_success_resource="@drawable/ic_done_white_48dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Round morphing" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Standard" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_round"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="false"
-        app:rb_animation_corner_radius="20dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorPrimaryDark"
-        app:rb_animation_progress_padding="8dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_radius="4dp"
-        app:rb_corner_width="1dp"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="6dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="6dp"
+            app:rb_corner_width="1dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Alpha morphing" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="With dot animation" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_alpha"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="true"
-        app:rb_animation_corner_radius="20dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_inner_resource="@drawable/ic_action_cose"
-        app:rb_animation_inner_resource_color="@color/green"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_padding="3dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_radius="20dp"
-        app:rb_corner_width="1dp"
-        app:rb_failure_resource="@drawable/ic_action_cose"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_dot"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="true"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_style="dots"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="6dp"
+            app:rb_corner_width="1dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Success" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Round morphing" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_success"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="false"
-        app:rb_animation_corner_radius="20dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_padding="8dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_width="1dp"
-        app:rb_success_resource="@drawable/ic_done_white_48dp"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_round"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="20dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorPrimaryDark"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="4dp"
+            app:rb_corner_width="1dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Failure" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Alpha morphing" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_failure"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="false"
-        app:rb_animation_corner_radius="20dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_padding="8dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_width="1dp"
-        app:rb_failure_resource="@drawable/ic_action_cose"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_alpha"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="true"
+            app:rb_animation_corner_radius="20dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_inner_resource="@drawable/ic_action_cose"
+            app:rb_animation_inner_resource_color="@color/green"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="3dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="20dp"
+            app:rb_corner_width="1dp"
+            app:rb_failure_resource="@drawable/ic_action_cose"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Success" />
+
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_success"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="20dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_width="1dp"
+            app:rb_success_resource="@drawable/ic_done_white_48dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Failure" />
+
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_failure"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="20dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_width="1dp"
+            app:rb_failure_resource="@drawable/ic_action_cose"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Bonus" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Bonus" />
 
-    <com.marozzi.roundbutton.RoundButton
-        android:id="@+id/bt_bonus"
-        style="@style/TextStyle194"
-        android:layout_width="88dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:text="Button"
-        app:rb_animation_alpha="false"
-        app:rb_animation_corner_radius="20dp"
-        app:rb_animation_duration="500"
-        app:rb_animation_progress_color="@color/colorAccent"
-        app:rb_animation_progress_padding="8dp"
-        app:rb_animation_progress_width="2dp"
-        app:rb_background_color="@android:color/transparent"
-        app:rb_background_color_pressed="@color/colorPrimary"
-        app:rb_corner_color="@color/colorPrimary"
-        app:rb_corner_color_pressed="@color/colorPrimary"
-        app:rb_corner_width="1dp"
-        app:rb_failure_resource="@drawable/ic_action_cose"
-        app:rb_text_color="@color/colorPrimary"
-        app:rb_text_color_pressed="@android:color/white" />
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_bonus"
+            style="@style/TextStyle194"
+            android:layout_width="88dp"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:text="Button"
+            app:rb_animation_alpha="false"
+            app:rb_animation_corner_radius="20dp"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_padding="8dp"
+            app:rb_animation_progress_width="2dp"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_width="1dp"
+            app:rb_failure_resource="@drawable/ic_action_cose"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

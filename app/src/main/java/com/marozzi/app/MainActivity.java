@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.marozzi.roundbutton.RoundButton;
 import com.marozzi.roundbutton.RoundButtonHelper;
@@ -20,6 +21,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.bt_messanger)
+    void onClickBtMessanger(View view) {
+        final RoundButton bt = (RoundButton) view;
+        bt.startAnimation();
+        bt.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                bt.setResultState(RoundButton.ResultState.SUCCESS);
+            }
+        }, 3000);
+        bt.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RoundButtonHelper.Builder builder = RoundButton.newBuilder()
+                        .withText("Sended")
+                        .withBackgroundColor(Color.TRANSPARENT)
+                        .withTextColor(Color.DKGRAY)
+                        .withWidth(ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .withCornerRadius(0)
+                        .withCornerWidth(0);
+                bt.setCustomizations(builder);
+                bt.revertAnimation();
+            }
+        }, 5000);
     }
 
     @OnClick(R.id.bt_dot)
@@ -118,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Random random = new Random();
-                RoundButtonHelper.Builder builder = RoundButtonHelper.newBuilder()
+                RoundButtonHelper.Builder builder = RoundButton.newBuilder()
                         .withText("Bonus")
                         .withBackgroundColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))
                         .withTextColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)))

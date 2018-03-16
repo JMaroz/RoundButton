@@ -326,10 +326,30 @@ public class RoundButton extends AppCompatButton {
             resultFailureResource = builder.resultFailureResource;
 
         if (builder.text != null) {
-            if (animationState == AnimationState.PROGRESS || animationState == AnimationState.MORPHING) {
+            if (animationState != AnimationState.IDLE) {
                 property.setText(builder.text);
             } else {
                 setText(builder.text);
+            }
+        }
+
+        if (builder.width != null) {
+            if (animationState != AnimationState.IDLE) {
+                property.setAdjustWidth(builder.width);
+            } else {
+                ViewGroup.LayoutParams layoutParams = getLayoutParams();
+                layoutParams.width = builder.width;
+                setLayoutParams(layoutParams);
+            }
+        }
+
+        if (builder.height != null) {
+            if (animationState != AnimationState.IDLE) {
+                property.setAdjustHeight(builder.height);
+            } else {
+                ViewGroup.LayoutParams layoutParams = getLayoutParams();
+                layoutParams.height = builder.height;
+                setLayoutParams(layoutParams);
             }
         }
 
@@ -346,20 +366,12 @@ public class RoundButton extends AppCompatButton {
         super.onDraw(canvas);
 
         if (animationState == AnimationState.PROGRESS) {
-            drawIndeterminateProgress(canvas);
+            if (!progressDrawable.isRunning())
+                progressDrawable.start();
+            progressDrawable.draw(canvas);
         } else if (animationState == AnimationState.DONE && resultState != ResultState.NONE) {
-            drawDoneAnimation(canvas);
+            resultDrawable.draw(canvas);
         }
-    }
-
-    private void drawIndeterminateProgress(Canvas canvas) {
-        if (!progressDrawable.isRunning())
-            progressDrawable.start();
-        progressDrawable.draw(canvas);
-    }
-
-    private void drawDoneAnimation(Canvas canvas) {
-        resultDrawable.draw(canvas);
     }
 
     public void startAnimation() {
@@ -445,6 +457,16 @@ public class RoundButton extends AppCompatButton {
         morphTrasformations(getWidth(), getHeight(), property.getWidth(), property.getHeight(), animationCornerRadius, cornerRadius, fromAlpha, toAlpha, new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                if (property.getAdjustWidth() != null) {
+                    ViewGroup.LayoutParams layoutParams = getLayoutParams();
+                    layoutParams.width = property.getAdjustWidth();
+                    setLayoutParams(layoutParams);
+                }
+                if (property.getAdjustHeight() != null) {
+                    ViewGroup.LayoutParams layoutParams = getLayoutParams();
+                    layoutParams.height = property.getAdjustHeight();
+                    setLayoutParams(layoutParams);
+                }
                 setText(property.getText());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     setCompoundDrawablesRelative(property.getDrawables()[0], property.getDrawables()[1], property.getDrawables()[2], property.getDrawables()[3]);
@@ -618,6 +640,16 @@ public class RoundButton extends AppCompatButton {
          */
         private Drawable[] drawables;
 
+        /**
+         * Indicate the new width like WRAP_CONTENT or a value
+         */
+        private Integer adjustWidth;
+
+        /**
+         * Indicate the new height like WRAP_CONTENT or a value
+         */
+        private Integer adjustHeight;
+
         public ButtonProperty(Button button) {
             width = button.getWidth();
             height = button.getHeight();
@@ -647,6 +679,22 @@ public class RoundButton extends AppCompatButton {
 
         public void setText(String text) {
             this.text = text;
+        }
+
+        public void setAdjustWidth(Integer adjustWidth) {
+            this.adjustWidth = adjustWidth;
+        }
+
+        public Integer getAdjustWidth() {
+            return adjustWidth;
+        }
+
+        public void setAdjustHeight(Integer adjustHeight) {
+            this.adjustHeight = adjustHeight;
+        }
+
+        public Integer getAdjustHeight() {
+            return adjustHeight;
         }
     }
 }
