@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center"
-            android:paddingEnd="8dp"
             android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="Send Message"
             app:rb_animation_alpha="true"
             app:rb_animation_duration="500"
@@ -39,6 +39,37 @@
             app:rb_corner_color="@color/colorPrimary"
             app:rb_corner_color_pressed="@color/colorPrimary"
             app:rb_corner_radius="3dp"
+            app:rb_corner_width="1dp"
+            app:rb_success_resource="@drawable/ic_done_white_48dp"
+            app:rb_text_color="@color/colorPrimary"
+            app:rb_text_color_pressed="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Custom Drawable" />
+
+        <com.marozzi.roundbutton.RoundButton
+            android:id="@+id/bt_custom"
+            style="@style/TextStyle194"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Send Message"
+            app:rb_animation_alpha="true"
+            app:rb_animation_custom_resource="@drawable/animated_cloud"
+            app:rb_animation_duration="500"
+            app:rb_animation_progress_color="@color/colorAccent"
+            app:rb_animation_progress_style="custom"
+            app:rb_background_color="@android:color/transparent"
+            app:rb_background_color_pressed="@color/colorPrimary"
+            app:rb_corner_color="@color/colorPrimary"
+            app:rb_corner_color_pressed="@color/colorPrimary"
+            app:rb_corner_radius="3dp"
+
             app:rb_corner_width="1dp"
             app:rb_success_resource="@drawable/ic_done_white_48dp"
             app:rb_text_color="@color/colorPrimary"

@@ -9,7 +9,9 @@
         <attr name="rb_animation_progress_style" format="enum">
             <enum name="circle" value="0" />
             <enum name="dots" value="1" />
+            <enum name="custom" value="2" />
         </attr>
+        <attr name="rb_animation_custom_resource" format="reference" />
         <attr name="rb_animation_inner_resource" format="reference" />
         <attr name="rb_animation_inner_resource_color" format="color" />
 

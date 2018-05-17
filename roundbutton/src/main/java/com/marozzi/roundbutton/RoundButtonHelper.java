@@ -57,6 +57,7 @@ public class RoundButtonHelper {
         Integer animationProgressColor;
         Integer animationProgressPadding;
         Integer animationInnerResource;
+        Integer animationCustomResource;
         RoundButton.AnimationProgressStyle animationProgressStyle;
         Integer resultSuccessColor;
         Integer resultSuccessResource;
@@ -108,6 +109,11 @@ public class RoundButtonHelper {
             this.text = in.readString();
             this.width = (Integer) in.readValue(Integer.class.getClassLoader());
             this.height = (Integer) in.readValue(Integer.class.getClassLoader());
+        }
+
+        public Builder withAnimationCustomResource(@DrawableRes int animationCustomResource) {
+            this.animationCustomResource = animationCustomResource;
+            return this;
         }
 
         public Builder withAnimationInnerResource(@DrawableRes int animationInnerResource) {

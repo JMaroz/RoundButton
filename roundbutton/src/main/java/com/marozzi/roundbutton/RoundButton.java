@@ -15,6 +15,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.StateSet;
@@ -24,6 +26,7 @@ import android.widget.Button;
 import com.marozzi.roundbutton.animations.BaseAnimatedDrawable;
 import com.marozzi.roundbutton.animations.CircularAnimatedDrawable;
 import com.marozzi.roundbutton.animations.CircularRevealAnimatedDrawable;
+import com.marozzi.roundbutton.animations.CustomAnimatedDrawable;
 import com.marozzi.roundbutton.animations.DotsAnimatedDrawable;
 
 import static com.marozzi.roundbutton.RoundButtonHelper.createDrawable;
@@ -48,7 +51,7 @@ public class RoundButton extends AppCompatButton {
     }
 
     public enum AnimationProgressStyle {
-        CIRCLE, DOTS
+        CIRCLE, DOTS, CUSTOM
     }
 
     private BaseAnimatedDrawable progressDrawable;
@@ -80,6 +83,7 @@ public class RoundButton extends AppCompatButton {
     /**
      * The color of the bar during the animations
      */
+    @ColorInt
     private int animationProgressColor;
 
     /**
@@ -93,13 +97,21 @@ public class RoundButton extends AppCompatButton {
     private boolean animationAlpha;
 
     /**
+     * Resource for show an ccustom drawable as animation
+     */
+    @DrawableRes
+    private int animationCustomResource;
+
+    /**
      * Resource for show an image while animating, only work with circle animation
      */
+    @DrawableRes
     private int animationInnerResource;
 
     /**
      * Tint color for the resource to show while animating
      */
+    @DrawableRes
     private int animationInnerResourceColor;
 
     /**
@@ -195,6 +207,7 @@ public class RoundButton extends AppCompatButton {
         if (a.hasValue(R.styleable.RoundButton_rb_animation_progress_style)) {
             animationProgressStyle = AnimationProgressStyle.values()[a.getInt(R.styleable.RoundButton_rb_animation_progress_style, 0)];
         }
+        animationCustomResource = a.getResourceId(R.styleable.RoundButton_rb_animation_custom_resource, 0);
         animationInnerResource = a.getResourceId(R.styleable.RoundButton_rb_animation_inner_resource, 0);
         if (a.hasValue(R.styleable.RoundButton_rb_animation_inner_resource_color)) {
             animationInnerResourceColor = a.getColor(R.styleable.RoundButton_rb_animation_inner_resource_color, Color.BLACK);
@@ -291,6 +304,9 @@ public class RoundButton extends AppCompatButton {
 
         if (builder.animationInnerResource != null)
             animationInnerResource = builder.animationInnerResource;
+
+        if (builder.animationCustomResource != null)
+            animationCustomResource = builder.animationCustomResource;
 
         if (builder.animationDurations != null)
             animationDurations = builder.animationDurations;
@@ -406,6 +422,9 @@ public class RoundButton extends AppCompatButton {
                         break;
                     case DOTS:
                         progressDrawable = new DotsAnimatedDrawable(RoundButton.this, animationProgressColor);
+                        break;
+                    case CUSTOM:
+                        progressDrawable = new CustomAnimatedDrawable(RoundButton.this, animationCustomResource, animationProgressColor);
                         break;
                 }
 

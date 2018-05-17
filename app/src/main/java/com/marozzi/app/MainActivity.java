@@ -23,6 +23,17 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.bt_custom)
+    void onClickCustom(final RoundButton view) {
+        view.startAnimation();
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.revertAnimation();
+            }
+        }, 5000);
+    }
+
     @OnClick(R.id.bt_messanger)
     void onClickBtMessanger(View view) {
         final RoundButton bt = (RoundButton) view;
