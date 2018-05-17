@@ -17,7 +17,7 @@ Android Button with corner, morph and animations
 
 [ ![Download](https://api.bintray.com/packages/maro/maven/RoundButton/images/download.svg) ](https://bintray.com/maro/maven/RoundButton/_latestVersion)
 
-    compile 'com.marozzi.roundbutton:round-button:1.0.6'
+    compile 'com.marozzi.roundbutton:round-button:1.0.7'
 
 ## How to use
 
@@ -116,12 +116,16 @@ You can set a listener for every action
 - rb_animation_duration: duration of the animations in millisecond
 - rb_animation_corner_radius: the radius of the botton corner
 - rb_animation_alpha: true to perfom the morphing with alpha animation, false otherwise
-- rb_animation_progress_width: the width of the progress bar
-- rb_animation_progress_color: the color of the progress bar
-- rb_animation_progress_padding: the padding from the outer border of the progress bar
+- rb_animation_progress_width: the width of the progress circle when the animation_progress_style is circle
+- rb_animation_progress_color: the color of the progress indicator
+- rb_animation_progress_padding: the padding from the outer border of the progress indicator
 - rb_animation_progress_style: the style of the animation
     - circle progress indicator
     - dots progress indicator
+    - custom progress indicator, used with a rb_animation_custom_resource
+- rb_animation_custom_resource: android resource (AnimatedVectorDrawable) used for a custom progress indicator
+- rb_animation_inner_resource: show a drawable when the animation_progress_style is circle
+- rb_animation_inner_resource_color: tint color for rb_animation_inner_resource
 
 ### Results
 
